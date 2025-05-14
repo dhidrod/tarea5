@@ -7,6 +7,13 @@ Route::get('/', function () {
     return view('home');
 })->name('home');;
 
+Route::middleware(['auth', 'role:admin'])->group(function(){
+    Route::get('/admin', function () {
+        return view('admin');
+    })->name('admin');
+});
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
