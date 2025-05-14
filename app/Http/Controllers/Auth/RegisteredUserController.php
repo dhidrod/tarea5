@@ -46,7 +46,9 @@ class RegisteredUserController extends Controller
             'nick' => $request->nick,
             'image' => 'default.png',
         ]);
-
+        // Asignar rol de usuario
+        $user->assignRole('user');
+        
         event(new Registered($user));
 
         Auth::login($user);
