@@ -23,6 +23,6 @@ class UserSeeder extends Seeder
             'image' => 'default.png',
         ]);
 
-        User::factory()->count(50)->create();
+        User::factory()->count(10)->create();
     }
 }

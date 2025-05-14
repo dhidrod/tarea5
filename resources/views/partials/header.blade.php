@@ -9,7 +9,7 @@
                 <a href="/" class="nav-link">Inicio</a>
             </li>
             <li>
-                <a href="/" class="nav-link">Otro</a>
+                <a href="/dashboard" class="nav-link">Dashboard</a>
             </li>
         </ul>
     </nav>
