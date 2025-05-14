@@ -12,6 +12,9 @@
                 <a href="/dashboard" class="nav-link">Dashboard</a>
             </li>
             <li>
+                <a href="/register" class="nav-link">Nuevo Usuario</a>
+            </li>
+            <li>
                 <a href="/admin" class="nav-link">Admin</a>
             </li>
         </ul>
