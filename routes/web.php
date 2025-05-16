@@ -14,6 +14,15 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
 });
 
 
+Route::middleware(['auth', 'role:admin'])
+     ->prefix('admin')
+     ->name('admin.')
+     ->group(function () {
+        Route::resource('users', \App\Http\Controllers\Admin\UserController::class)
+             ->only(['index', 'edit', 'update', 'destroy']);
+     });
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

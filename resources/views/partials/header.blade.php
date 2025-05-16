@@ -6,8 +6,13 @@
         </a>
 
         <ul class="flex gap-6 text-[#EDEDEC]">
+
             @role('admin')
                 <p>Bienvenido, Administrador.</p>
+
+                <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                    {{ __('Gestionar usuarios') }}
+                </x-nav-link>
             @endrole
             @role('user')
                 <img src="{{ asset('storage/' . auth()->user()->image) }}" alt="Avatar de {{ auth()->user()->name }}"
@@ -15,6 +20,16 @@
 
                 <p>Bienvenido, {{ auth()->user()->name }}.</p>
             @endrole
+
+            @auth
+                <li>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="nav-link">Cerrar sesión</button>
+                    </form>
+                </li>
+            @endauth
+            
             <li>
                 <a href="/" class="nav-link">Inicio</a>
             </li>
