@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
         @csrf
 
         <!-- Nick -->
@@ -9,12 +9,12 @@
                 autofocus autocomplete="nickname" />
             <x-input-error :messages="$errors->get('nick')" class="mt-2" />
         </div>
-        
+
         <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required
-                autofocus autocomplete="name" />
+            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')"
+                required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
@@ -32,6 +32,15 @@
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
                 required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        </div>
+
+        <!-- Imagen de perfil -->
+        <div class="mt-4">
+            <label for="image" class="block text-sm font-medium text-gray-700">Imagen de perfil</label>
+            <input id="image" name="image" type="file" class="mt-1 block w-full" />
+            @error('image')
+                <span class="text-red-600 text-sm">{{ $message }}</span>
+            @enderror
         </div>
 
         <!-- Password -->
