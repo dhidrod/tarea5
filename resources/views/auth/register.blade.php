@@ -36,11 +36,10 @@
 
         <!-- Imagen de perfil -->
         <div class="mt-4">
-            <label for="image" class="block text-sm font-medium text-gray-700">Imagen de perfil</label>
-            <input id="image" name="image" type="file" class="mt-1 block w-full" />
-            @error('image')
-                <span class="text-red-600 text-sm">{{ $message }}</span>
-            @enderror
+            <x-input-label for="image" :value="__('Imagen de perfil')" />
+            <x-text-input id="image" class="block mt-1 w-full" type="file" name="image" :value="old('image')"
+                required />
+            <x-input-error :messages="$errors->get('image')" class="mt-2" />
         </div>
 
         <!-- Password -->
