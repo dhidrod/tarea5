@@ -45,6 +45,7 @@ class RegisteredUserController extends Controller
             'surname' => $request->surname,
             'nick' => $request->nick,
             'image' => 'default.png',
+            'reputation' => 0,
         ]);
         // Asignar rol de usuario
         $user->assignRole('user');
