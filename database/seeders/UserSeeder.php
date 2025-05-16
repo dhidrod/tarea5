@@ -39,12 +39,31 @@ class UserSeeder extends Seeder
             'nick'    => 'Dani',
             'email'   => 'daniel@daniel.com',
             'password'=> bcrypt('1234'),
-            'image'   => 'default.png',
+            'image'   => 'mascara.png',
             'reputation' => 1,
         ]);
         $user->assignRole('user');
 
+        $imagenes = [
+            'awakening.png',
+            'default.png',
+            'mascara.png',
+            'carrera.png',
+            'cueva.png',
+            'mar.png',
+            'fiesta.png',
+            'gato.png',
+            'perro.png',
+            'naturaleza.png',
+            'squadala.png',
+            'tanque.png',
+        ];
         // Creamos usuarios y les asignamos el rol de usuario
-        User::factory()->count(10)->create()->each(fn($u) => $u->assignRole('user'));
+        //User::factory()->count(10)->create()->each(fn($u) => $u->assignRole('user'));
+        User::factory()->count(10)->create()->each(function($u) use ($imagenes) {
+            $u->image = $imagenes[array_rand($imagenes)];
+            $u->save();
+            $u->assignRole('user');
+        });
     }
 }
