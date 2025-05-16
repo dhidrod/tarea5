@@ -6,22 +6,27 @@
         </a>
 
         <ul class="flex gap-6 text-[#EDEDEC]">
-                    @role('admin')
-                    <p>Bienvenido, Administrador.</p>
-                    @endrole
+            @role('admin')
+                <p>Bienvenido, Administrador.</p>
+            @endrole
+            @role('user')
+                <img src="{{ asset('storage/' . auth()->user()->image) }}" alt="Avatar de {{ auth()->user()->name }}"
+                    class="h-10 w-10 rounded-full object-cover">
 
-                    <li>
-                        <a href="/" class="nav-link">Inicio</a>
-                    </li>
-                    <li>
-                        <a href="/dashboard" class="nav-link">Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="/register" class="nav-link">Nuevo Usuario</a>
-                    </li>
-                    <li>
-                        <a href="/admin" class="nav-link">Admin</a>
-                    </li>
+                <p>Bienvenido, {{ auth()->user()->name }}.</p>
+            @endrole
+            <li>
+                <a href="/" class="nav-link">Inicio</a>
+            </li>
+            <li>
+                <a href="/dashboard" class="nav-link">Dashboard</a>
+            </li>
+            <li>
+                <a href="/register" class="nav-link">Nuevo Usuario</a>
+            </li>
+            <li>
+                <a href="/admin" class="nav-link">Admin</a>
+            </li>
         </ul>
     </nav>
 </header>
