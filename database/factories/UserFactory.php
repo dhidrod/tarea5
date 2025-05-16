@@ -32,6 +32,7 @@ class UserFactory extends Factory
             'password' => bcrypt('1234'),
             'image' => 'default.png',
             'remember_token' => Str::random(10),
+            'reputation' => 0,
         ];
     }
 
