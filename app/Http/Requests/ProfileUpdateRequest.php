@@ -30,6 +30,7 @@ class ProfileUpdateRequest extends FormRequest
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
             'reputation' => ['integer','min:0','max:1000',],
+            'image' => ['nullable', 'image', 'max:2048'],
         ];
     }
 }

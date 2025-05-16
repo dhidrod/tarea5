@@ -31,6 +31,19 @@ class UserSeeder extends Seeder
         ]);
         $admin->assignRole('admin');
 
+        // Creamos un usuario fijo y le asignamos rol
+        $user = User::create([
+            'role'    => 'user',
+            'name'    => 'Daniel',
+            'surname' => 'Hidalgo',
+            'nick'    => 'Dani',
+            'email'   => 'daniel@daniel.com',
+            'password'=> bcrypt('1234'),
+            'image'   => 'default.png',
+            'reputation' => 1,
+        ]);
+        $user->assignRole('user');
+
         // Creamos usuarios y les asignamos el rol de usuario
         User::factory()->count(10)->create()->each(fn($u) => $u->assignRole('user'));
     }
