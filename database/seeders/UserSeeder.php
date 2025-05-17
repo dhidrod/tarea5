@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
         // Creamos roles base
         Role::firstOrCreate(['name' => 'admin']);
         Role::firstOrCreate(['name' => 'user']);
-        
+
         // Creamos un admin fijo y le asignamos rol
         $admin = User::create([
             'role'    => 'admin',
@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
             'surname' => 'User',
             'nick'    => 'admin',
             'email'   => 'admin@example.com',
-            'password'=> bcrypt('admin'),
+            'password' => bcrypt('admin'),
             'image'   => 'default.png',
             'reputation' => random_int(10, 20),
         ]);
@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
             'surname' => 'Hidalgo',
             'nick'    => 'Dani',
             'email'   => 'daniel@daniel.com',
-            'password'=> bcrypt('1234'),
+            'password' => bcrypt('1234'),
             'image'   => 'mascara.png',
             'reputation' => random_int(1, 10),
         ]);
@@ -57,10 +57,16 @@ class UserSeeder extends Seeder
             'naturaleza.png',
             'squadala.png',
             'tanque.png',
+            'gatosluchando.jpg',
+            'comida1.png',
+            'comida2.png',
+            'tanque2.jpg',
+            'pajaro.jpg',
+            'rap.jpg'
         ];
         // Creamos usuarios y les asignamos el rol de usuario
         //User::factory()->count(10)->create()->each(fn($u) => $u->assignRole('user'));
-        User::factory()->count(10)->create()->each(function($u) use ($imagenes) {
+        User::factory()->count(50)->create()->each(function ($u) use ($imagenes) {
             $u->image = $imagenes[array_rand($imagenes)];
             $u->save();
             $u->assignRole('user');

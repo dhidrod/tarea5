@@ -25,9 +25,15 @@ class ImageSeeder extends Seeder
             'naturaleza.png',
             'squadala.png',
             'tanque.png',
+            'gatosluchando.jpg',
+            'comida1.png',
+            'comida2.png',
+            'tanque2.jpg',
+            'pajaro.jpg',
+            'rap.jpg'
         ];
 
-        Image::factory()->count(30)->create()->each(function($i) use ($imagenes) {
+        Image::factory()->count(100)->create()->each(function($i) use ($imagenes) {
             $i->image_path = $imagenes[array_rand($imagenes)];
             $i->save();
         });
