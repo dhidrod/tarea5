@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -22,11 +23,21 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'role'       => 'required|in:user,admin',
-            'reputation' => 'required|integer|min:0|max:1000',
-        ]);
+        'role'       => ['required', 'in:user,admin'],
+        'reputation' => ['required','integer','min:0','max:1000'],
+        'name'       => ['required','string','max:255'],
+        'email'      => [
+            'required','email','max:255',
+            Rule::unique('users','email')->ignore($user->id),
+        ],
+        'surname'    => ['required','string','max:255'],
+        'nick'       => [
+            'required','string','max:255',
+            Rule::unique('users','nick')->ignore($user->id),
+        ],
+    ]);
 
-        $user->update($request->only('role', 'reputation'));
+        $user->update($request->only('role', 'reputation', 'name', 'email', 'surname', 'nick'));
 
         return redirect()->route('admin.users.index')
             ->with('success', 'Usuario actualizado correctamente.');
