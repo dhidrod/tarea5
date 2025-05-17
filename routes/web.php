@@ -20,7 +20,21 @@ Route::get('/', [HomeController::class, 'index'])
 Route::get('/images/{image}', [ImageController::class,'show'])->name('images.show')->middleware('auth');
 Route::post('/images/{image}/like', [LikeController::class,'store'])->name('images.like')->middleware('auth');
 Route::post('/images/{image}/comments', [CommentController::class,'store'])->name('comments.store')->middleware('auth');
-
+// Comentarios
+// Postear
+Route::post('/images/{image}/comments', [\App\Http\Controllers\CommentController::class, 'store'])
+     ->name('comments.store')
+     ->middleware('auth');
+// Eliminar comentario
+Route::delete('/comments/{comment}', [\App\Http\Controllers\CommentController::class, 'destroy'])
+     ->name('comments.destroy')
+     ->middleware('auth');
+//
+// Likes
+// Crear o eliminar like (toggle)
+Route::post('/images/{image}/like', [\App\Http\Controllers\LikeController::class, 'toggle'])
+     ->name('images.like')
+     ->middleware('auth');
 
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
