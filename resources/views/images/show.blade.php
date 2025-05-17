@@ -5,6 +5,21 @@
     <div class="container mx-auto p-6 ">
         {{-- Link para volver atrás --}}
         <a href="{{ route('home') }}" class="text-blue-500 hover:underline mb-4 inline-block">&larr; Volver atrás</a>
+        @can('update', $image)
+            <a href="{{ route('images.edit', $image) }}" class="px-3 py-1 bg-yellow-500 text-black rounded hover:bg-yellow-400">
+                Editar
+            </a>
+        @endcan
+
+        @can('delete', $image)
+            <form method="POST" action="{{ route('images.destroy', $image) }}" class="inline-block"
+                onsubmit="return confirm('Eliminar imagen?');">
+                @csrf @method('DELETE')
+                <button type="submit" class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-500">
+                    Eliminar
+                </button>
+            </form>
+        @endcan
 
         <div class="relative mb-6 flex items-center justify-center">
             {{-- Flecha anterior (izquierda) --}}
