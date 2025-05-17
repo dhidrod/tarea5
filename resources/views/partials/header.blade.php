@@ -8,7 +8,7 @@
         <ul class="flex gap-6 text-[#EDEDEC]">
 
             @role('admin')
-                <p>Bienvenido, Administrador.</p>
+                <p>Bienvenido, eres el Administrador.</p>
 
                 <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                     {{ __('Gestionar usuarios') }}
@@ -28,6 +28,13 @@
                         <button type="submit" class="nav-link">Cerrar sesión</button>
                     </form>
                 </li>
+            @else
+                <li>
+                    <a href="/register" class="nav-link">Nuevo Usuario</a>
+                </li>
+                <li>
+                    <a href="/login" class="nav-link">Iniciar sesión</a>
+                </li>
             @endauth
             
             <li>
@@ -36,12 +43,8 @@
             <li>
                 <a href="/dashboard" class="nav-link">Dashboard</a>
             </li>
-            <li>
-                <a href="/register" class="nav-link">Nuevo Usuario</a>
-            </li>
-            <li>
-                <a href="/admin" class="nav-link">Admin</a>
-            </li>
+
+
         </ul>
     </nav>
 </header>
