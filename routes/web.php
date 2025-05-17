@@ -2,10 +2,22 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ImageController;
 
+/*
 Route::get('/', function () {
     return view('home');
 })->name('home');;
+*/
+Route::get('/', [HomeController::class, 'index'])
+     ->name('home')
+     ->middleware('auth');
+
+
+Route::get('/images/{image}', [ImageController::class, 'show'])
+     ->name('images.show')
+     ->middleware('auth');
 
 
 
