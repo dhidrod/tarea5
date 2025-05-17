@@ -85,7 +85,7 @@
         <div class="">
             <h2 class="text-xl font-semibold mb-4">Comentarios ({{ $image->comments->count() }})</h2>
 
-            @forelse($image->comments as $comment)
+            @forelse($comments as $comment)
                 <div class="mb-4 p-4 bg-white rounded shadow relative">
                     <div class="flex items-center space-x-3 mb-2 pr-16"> {{-- Añadido padding derecho para evitar solapamiento --}}
                         <img src="{{ asset('storage/' . $comment->user->image) }}" alt="{{ $comment->user->nick }}"
@@ -112,6 +112,10 @@
             @empty
                 <p class="text-gray-600">No hay comentarios aún. ¡Sé el primero en comentar!</p>
             @endforelse
+            {{-- Paginación de comentarios --}}
+            <div class="mt-4 flex justify-center">
+                {{ $comments->links() }}
+            </div>
         </div>
     </div>
 @endsection

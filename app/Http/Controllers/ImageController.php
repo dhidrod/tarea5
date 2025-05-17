@@ -9,16 +9,19 @@ class ImageController extends Controller
 {
     public function show(Image $image)
     {
-        // Cargamos relaciones
-        $image->load(['user', 'comments.user', 'likes.user']);
+        // Cargamos relaciones de usuario y likes (pero no comentarios completos)
+        $image->load(['user', 'likes.user']);
 
-        // IDs ordenados de todas las imágenes
-        $allIds = Image::orderBy('created_at', 'desc')->pluck('id')->toArray();
-        $currentIndex = array_search($image->id, $allIds);
+        // IDs ordenados de todas las imágenes para flechas
+        $allIds = Image::orderBy('created_at', 'asc')->pluck('id')->toArray();
+        $currentIndex = array_search($image->id, $allIds, true);
 
-        $prevId = $allIds[$currentIndex - 1] ?? null; // más viejo
-        $nextId = $allIds[$currentIndex + 1] ?? null; // más reciente
+        $prevId = $allIds[$currentIndex + 1] ?? null; // más antigua
+        $nextId = $allIds[$currentIndex - 1] ?? null; // más reciente
 
-        return view('images.show', compact('image', 'prevId', 'nextId'));
+        // Paginamos comentarios: 10 por página
+        $comments = $image->comments()->with('user')->orderBy('created_at', 'asc')->paginate(10);
+
+        return view('images.show', compact('image', 'prevId', 'nextId', 'comments'));
     }
 }
