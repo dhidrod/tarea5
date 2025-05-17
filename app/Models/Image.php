@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Image extends Model
 {
@@ -20,12 +21,15 @@ class Image extends Model
     /**
      * Suma la reputación de todos los usuarios que han dado like a esta imagen.
      */
-    public function getLikesReputationAttribute(): int
+    protected function likesReputation(): Attribute
     {
-        return $this->likes()
-            ->join('users', 'likes.user_id', '=', 'users.id')
-            ->sum('users.reputation');
+        return Attribute::make(
+            get: fn() => $this->likes()
+                ->join('users', 'likes.user_id', '=', 'users.id')
+                ->sum('users.reputation')
+        );
     }
+
 
 
     public function user()

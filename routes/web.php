@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\LikeController;
+use App\Http\Controllers\CommentController;
 
 /*
 Route::get('/', function () {
@@ -11,13 +13,13 @@ Route::get('/', function () {
 })->name('home');;
 */
 Route::get('/', [HomeController::class, 'index'])
-     ->name('home')
-     ->middleware('auth');
+     ->name('home');
 
 
-Route::get('/images/{image}', [ImageController::class, 'show'])
-     ->name('images.show')
-     ->middleware('auth');
+// Images
+Route::get('/images/{image}', [ImageController::class,'show'])->name('images.show')->middleware('auth');
+Route::post('/images/{image}/like', [LikeController::class,'store'])->name('images.like')->middleware('auth');
+Route::post('/images/{image}/comments', [CommentController::class,'store'])->name('comments.store')->middleware('auth');
 
 
 

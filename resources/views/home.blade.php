@@ -20,7 +20,7 @@
                       flex flex-col justify-end p-4 text-white text-sm transition">
             <div>{{ Str::limit($img->description, 60) }}</div>
             <div class="mt-2 flex items-center space-x-2">
-              <img src="{{ asset('storage/' . $img->user->image_path) }}"
+              <img src="{{ asset('storage/' . $img->user->image) }}"
                    alt="{{ $img->user->name }}"
                    class="h-6 w-6 rounded-full object-cover border-2 border-white">
               <span>{{ $img->user->nick }}</span>
