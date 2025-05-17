@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
             'email'   => 'admin@example.com',
             'password'=> bcrypt('admin'),
             'image'   => 'default.png',
-            'reputation' => 100,
+            'reputation' => random_int(10, 20),
         ]);
         $admin->assignRole('admin');
 
@@ -40,7 +40,7 @@ class UserSeeder extends Seeder
             'email'   => 'daniel@daniel.com',
             'password'=> bcrypt('1234'),
             'image'   => 'mascara.png',
-            'reputation' => 1,
+            'reputation' => random_int(1, 10),
         ]);
         $user->assignRole('user');
 
