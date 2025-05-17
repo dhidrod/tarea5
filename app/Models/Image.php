@@ -16,6 +16,18 @@ class Image extends Model
         'description',
     ];
 
+
+    /**
+     * Suma la reputación de todos los usuarios que han dado like a esta imagen.
+     */
+    public function getLikesReputationAttribute(): int
+    {
+        return $this->likes()
+            ->join('users', 'likes.user_id', '=', 'users.id')
+            ->sum('users.reputation');
+    }
+
+
     public function user()
     {
         return $this->belongsTo(User::class);

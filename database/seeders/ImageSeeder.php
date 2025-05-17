@@ -13,8 +13,24 @@ class ImageSeeder extends Seeder
      */
     public function run(): void
     {
-        Image::factory()
-            ->count(50)
-            ->create();
+        $imagenes = [
+            'awakening.png',
+            'default.png',
+            'mascara.png',
+            'carrera.png',
+            'cueva.png',
+            'mar.png',
+            'fiesta.png',
+            'gato.png',
+            'perro.png',
+            'naturaleza.png',
+            'squadala.png',
+            'tanque.png',
+        ];
+
+        Image::factory()->count(30)->create()->each(function($i) use ($imagenes) {
+            $i->image_path = $imagenes[array_rand($imagenes)];
+            $i->save();
+        });
     }
 }

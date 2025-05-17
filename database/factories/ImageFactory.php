@@ -19,11 +19,8 @@ class ImageFactory extends Factory
     public function definition(): array
     {
         return [
-            // Asigna cada imagen a un usuario existente
-            'user_id'     => User::inRandomOrder()->first()->id,
-            // Genera un nombre de imagen simulado
-            //'image_path'  => 'images/' . $this->faker->imageUrl(800, 600),
-            'image_path'  => 'images/' . Str::random(12) . '.jpg',
+            'user_id'    => User::inRandomOrder()->first()->id,
+            'image_path'      => 'default.png', // el seeder lo rellenará con una real
             'description' => $this->faker->sentence(8),
         ];
     }
