@@ -36,14 +36,15 @@
 
 
         {{-- Likes --}}
-        <div class="flex items-center mb-6 ">
-            <form method="POST" action="{{ route('images.like', $image) }}">
-                @csrf
-                <button type="submit" class="px-4 py-2 bg-blue-600 text-black rounded hover:bg-blue-500 transition">
-                    👍 Me gusta ({{ $image->likes_reputation }})
-                </button>
-            </form>
-        </div>
+        <form method="POST" action="{{ route('images.like', $image) }}">
+            @csrf
+            <button type="submit" class="px-4 py-2 rounded transition"
+                style="background-color: {{ Auth::user()->likes()->where('image_id', $image->id)->exists() ? 'rgb(255, 100, 100)' : 'rgb(117, 153, 245)' }} !important">
+                {{ Auth::user()->likes()->where('image_id', $image->id)->exists() ? 'Dar un No me gusta' : 'Dar un Me gusta' }}
+                ({{ $image->likes_reputation }})
+            </button>
+        </form>
+
 
         {{-- Descripción y autor --}}
         <div class="mb-8 p-4 bg-gray-100 rounded">
@@ -100,7 +101,8 @@
                                 onsubmit="return confirm('¿Eliminar tu comentario?');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" style="background-color: red !important" class="text-white px-3 py-1.5 rounded-md shadow-sm hover:shadow-md transition-all duration-200 flex items-center">
+                                <button type="submit" style="background-color: red !important"
+                                    class="text-white px-3 py-1.5 rounded-md shadow-sm hover:shadow-md transition-all duration-200 flex items-center">
                                     Eliminar
                                 </button>
                             </form>
