@@ -15,7 +15,6 @@ class ImageSeeder extends Seeder
     {
         $imagenes = [
             'awakening.png',
-            'default.png',
             'mascara.png',
             'carrera.png',
             'cueva.png',

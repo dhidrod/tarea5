@@ -18,10 +18,23 @@ class ImageFactory extends Factory
      */
     public function definition(): array
     {
+        $descriptions = [
+            'Una foto de mi perro',
+            'Una foto de mi gato',
+            'Una foto de mi familia',
+            'Una foto de mis amigos',
+            'Una foto de mis vacaciones',
+            'Una foto de mi comida',
+            'Lo vi y no pude resistir',
+            'Cuando la vida te da limones, haz limonada',
+            'La vida es un viaje, no un destino',
+            'Si pudiera, lo haría de nuevo',
+            'Cuando te dicen que te pareces...',
+        ];
         return [
             'user_id'    => User::inRandomOrder()->first()->id,
             'image_path'      => 'default.png', // el seeder lo rellenará con una real
-            'description' => $this->faker->sentence(8),
+            'description' => $descriptions[array_rand($descriptions)],
         ];
     }
 }
