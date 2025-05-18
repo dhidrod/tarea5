@@ -69,6 +69,7 @@
                     class="h-8 w-8 rounded-full object-cover">
                 <span class="font-medium">{{ $image->user->nick }}</span>
                 <span class="text-gray-500 text-sm">· {{ $image->created_at->diffForHumans() }}</span>
+                <span class="text-gray-500 text-sm">· {{ $image->created_at }}</span>
             </div>
         </div>
 
