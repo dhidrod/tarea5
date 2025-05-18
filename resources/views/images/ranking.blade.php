@@ -5,10 +5,10 @@
         {{-- Cabecera --}}
         <h1 class="text-3xl font-bold mb-4 text-center">Ranking de Imágenes</h1>
         <p class="text-lg text-center text-gray-700 mb-6">
-            Las imágenes más populares según la reputación de quienes les dieron «Me gusta».
+            ¡Las imágenes más populares de la web!
         </p>
 
-        {{-- (Opcional) botón de subida si quieres permitir subida aquí también
+        {{-- Botón de subida 
         <div class="flex justify-end mb-4">
             <a href="{{ route('images.create') }}"
                class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-500">
@@ -17,7 +17,7 @@
         </div>
         --}}
 
-        {{-- Grid de imágenes con hover-overlay al estilo del home --}}
+        {{-- Grid de imágenes --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             @foreach ($images as $img)
                 <div class="relative group border rounded-lg overflow-hidden shadow hover:shadow-lg transition">
@@ -46,7 +46,7 @@
             @endforeach
         </div>
 
-        {{-- Resumen y paginación centrada --}}
+        {{-- Paginación --}}
         <div class="mt-8">
             <div class="flex justify-center">
                 {{ $images->links() }}
