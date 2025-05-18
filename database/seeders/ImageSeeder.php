@@ -30,7 +30,18 @@ class ImageSeeder extends Seeder
             'comida2.png',
             'tanque2.jpg',
             'pajaro.jpg',
-            'rap.jpg'
+            'rap.jpg',
+            'perro2.png',
+            'dibujo.png',
+            'dibujo2.png',
+            'paraguas.png',
+            'mujer.png',
+            'gnomo.png',
+            'amigos.png',
+            'amigos2.png',
+            'familia.png',
+            'familia2.png',
+            'elefante.png',
         ];
 
         Image::factory()->count(100)->create()->each(function($i) use ($imagenes) {

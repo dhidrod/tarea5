@@ -62,7 +62,18 @@ class UserSeeder extends Seeder
             'comida2.png',
             'tanque2.jpg',
             'pajaro.jpg',
-            'rap.jpg'
+            'rap.jpg',
+            'perro2.png',
+            'dibujo.png',
+            'dibujo2.png',
+            'paraguas.png',
+            'mujer.png',
+            'gnomo.png',
+            'amigos.png',
+            'amigos2.png',
+            'familia.png',
+            'familia2.png',
+            'elefante.png',
         ];
         // Creamos usuarios y les asignamos el rol de usuario
         //User::factory()->count(10)->create()->each(fn($u) => $u->assignRole('user'));
