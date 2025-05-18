@@ -24,4 +24,14 @@ class ImagePolicy
         // Solo el autor
         return $user->id === $image->user_id;
     }
+
+    /**
+     * Determina si el usuario puede crear (subir) una nueva imagen.
+     */
+    public function create(User $user): bool
+    {
+        // Cualquier usuario autenticado puede subir imágenes.
+        // Si queremos limitarlo (por ejemplo a solo admins), lo añadimos aquí.
+        return true;
+    }
 }

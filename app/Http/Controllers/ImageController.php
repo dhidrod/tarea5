@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Image;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ImageController extends Controller
 {
@@ -54,5 +55,40 @@ class ImageController extends Controller
         return redirect()
             ->route('home')
             ->with('success', 'Imagen eliminada.');
+    }
+
+    // Mostrar el formulario
+    public function create()
+    {
+        return view('images.create');
+    }
+
+    // Procesar la subida
+    public function store(Request $request)
+    {
+        // Validar
+        $data = $request->validate([
+            'image_file'  => ['required', 'image', 'max:2048'],
+            'description' => ['nullable', 'string', 'max:500'],
+        ], [
+            'image_file.required' => 'El campo de imagen es obligatorio.',
+            'image_file.image'    => 'El archivo debe ser una imagen válida.',
+            'image_file.max'      => 'La imagen no debe superar los 2MB.',
+            'description.string'  => 'La descripción debe ser texto.',
+            'description.max'     => 'La descripción no puede exceder los 500 caracteres.',
+        ]);
+
+        // Almacenar el fichero en storage/app/public/images
+        $path = $request->file('image_file')->store('images', 'public');
+
+        // Crear registro en BD
+        Image::create([
+            'user_id'    => Auth::id(),
+            'image_path' => $path,
+            'description' => $data['description'] ?? '',
+        ]);
+
+        return redirect()->route('home')
+            ->with('success', 'Imagen subida correctamente.');
     }
 }
