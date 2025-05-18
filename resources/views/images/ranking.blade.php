@@ -3,34 +3,36 @@
 @section('content')
     <div class="container mx-auto p-6">
         {{-- Cabecera --}}
-        <h1 class="text-3xl font-bold mb-4 text-center">Inicio</h1>
+        <h1 class="text-3xl font-bold mb-4 text-center">Ranking de Imágenes</h1>
         <p class="text-lg text-center text-gray-700 mb-6">
-            Bienvenido a la galería. Aquí puedes ver y compartir imágenes.
+            Las imágenes más populares según la reputación de quienes les dieron «Me gusta».
         </p>
-        <p class="text-lg text-center text-gray-700 mb-6">
-            <a href="{{ route('images.ranking') }}" class="text-blue-500 hover:underline">Ranking de Imágenes</a>
-        </p>
+
+        {{-- (Opcional) botón de subida si quieres permitir subida aquí también
         <div class="flex justify-end mb-4">
-            <a href="{{ route('images.create') }}" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-500">
+            <a href="{{ route('images.create') }}"
+               class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-500">
                 + Subir imagen
             </a>
         </div>
+        --}}
 
-
-        {{-- Grid de imágenes --}}
+        {{-- Grid de imágenes con hover-overlay al estilo del home --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             @foreach ($images as $img)
                 <div class="relative group border rounded-lg overflow-hidden shadow hover:shadow-lg transition">
-                    <img src="{{ asset('storage/' . $img->image_path) }}" alt="Imagen {{ $img->id }}"
-                        class="w-full h-48 object-cover">
+                    <img src="{{ asset('storage/' . $img->image_path) }}"
+                         alt="Imagen {{ $img->id }}"
+                         class="w-full h-48 object-cover">
 
                     <div
                         class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100
-                      flex flex-col justify-end p-4 text-white text-sm transition">
+                               flex flex-col justify-end p-4 text-white text-sm transition">
                         <div>{{ Str::limit($img->description, 60) }}</div>
                         <div class="mt-2 flex items-center space-x-2">
-                            <img src="{{ asset('storage/' . $img->user->image) }}" alt="{{ $img->user->name }}"
-                                class="h-6 w-6 rounded-full object-cover border-2 border-white">
+                            <img src="{{ asset('storage/' . $img->user->image) }}"
+                                 alt="{{ $img->user->nick }}"
+                                 class="h-6 w-6 rounded-full object-cover border-2 border-white">
                             <span>{{ $img->user->nick }}</span>
                             <span class="ml-auto text-blue-400 font-semibold">
                                 👍 {{ $img->likes_reputation }}
@@ -44,9 +46,11 @@
             @endforeach
         </div>
 
-        {{-- Paginación centrada --}}
-        <div class="mt-8 flex justify-center">
-            {{ $images->links() }}
+        {{-- Resumen y paginación centrada --}}
+        <div class="mt-8">
+            <div class="flex justify-center">
+                {{ $images->links() }}
+            </div>
         </div>
     </div>
 @endsection

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ImageController extends Controller
 {
@@ -90,5 +91,20 @@ class ImageController extends Controller
 
         return redirect()->route('home')
             ->with('success', 'Imagen subida correctamente.');
+    }
+
+    public function ranking()
+    {
+        // Cargamos las imágenes junto al sumatorio de reputación (likes ponderados)
+        // y ordenamos de mayor a menor, paginando 12 por página.
+        $images = Image::with('user')
+            ->withSum(['likes as likes_reputation' => function ($q) {
+                $q->join('users', 'likes.user_id', '=', 'users.id')
+                    ->select(DB::raw('SUM(users.reputation)'));
+            }], 'users.reputation')
+            ->orderByDesc('likes_reputation')
+            ->paginate(12);
+
+        return view('images.ranking', compact('images'));
     }
 }

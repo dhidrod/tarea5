@@ -70,6 +70,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
      Route::resource('users', UserController::class)->only(['index', 'edit', 'update', 'destroy']);
 });
 
+// Ranking
+Route::get('/ranking', [\App\Http\Controllers\ImageController::class, 'ranking'])
+     ->name('images.ranking');
 
 
 Route::get('/dashboard', function () {
