@@ -7,6 +7,7 @@ use App\Http\Controllers\ImageController;
 use App\Models\Image;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\admin\UserController;
 
 /*
 Route::get('/', function () {
@@ -44,31 +45,29 @@ Route::get('/', [HomeController::class, 'index'])
      Route::delete('/images/{image}', [ImageController::class, 'destroy'])
           ->name('images.destroy')
           ->middleware('can:delete,image');
-
+// Mostrar imagen
 Route::get('/images/{image}', [ImageController::class, 'show'])->name('images.show')->middleware('auth');
-Route::post('/images/{image}/like', [LikeController::class, 'store'])->name('images.like')->middleware('auth');
-Route::post('/images/{image}/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');
 
 
 // Comentarios
 // Postear
-Route::post('/images/{image}/comments', [\App\Http\Controllers\CommentController::class, 'store'])
+Route::post('/images/{image}/comments', [CommentController::class, 'store'])
      ->name('comments.store')
      ->middleware('auth');
 // Eliminar comentario
-Route::delete('/comments/{comment}', [\App\Http\Controllers\CommentController::class, 'destroy'])
+Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])
      ->name('comments.destroy')
      ->middleware('auth');
-//
+
 // Likes
 // Crear o eliminar like (toggle)
-Route::post('/images/{image}/like', [\App\Http\Controllers\LikeController::class, 'toggle'])
+Route::post('/images/{image}/like', [LikeController::class, 'toggle'])
      ->name('images.like')
      ->middleware('auth');
 
-
+// Funciones de Administrador
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-     Route::resource('users', \App\Http\Controllers\Admin\UserController::class)->only(['index', 'edit', 'update', 'destroy']);
+     Route::resource('users', UserController::class)->only(['index', 'edit', 'update', 'destroy']);
 });
 
 
