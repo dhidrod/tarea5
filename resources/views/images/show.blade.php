@@ -111,7 +111,7 @@
                     </div>
                     <div class="flex justify-between items-center">
                         <p class="text-gray-800">{{ $comment->content }}</p>
-                        {{-- Botón de eliminar alineado a la derecha --}}
+                        {{-- Botón de eliminar --}}
                         @if (auth()->id() === $comment->user_id)
                             <form action="{{ route('comments.destroy', $comment) }}" method="POST"
                                 onsubmit="return confirm('¿Eliminar tu comentario?');">
