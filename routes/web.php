@@ -46,7 +46,9 @@ Route::get('/', [HomeController::class, 'index'])
           ->name('images.destroy')
           ->middleware('can:delete,image');
 // Mostrar imagen
-Route::get('/images/{image}', [ImageController::class, 'show'])->name('images.show')->middleware('auth');
+Route::get('/images/{image}', [ImageController::class, 'show'])
+     ->name('images.show')
+     ->middleware('auth');
 
 
 // Comentarios
@@ -71,7 +73,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 });
 
 // Ranking
-Route::get('/ranking', [\App\Http\Controllers\ImageController::class, 'ranking'])
+Route::get('/ranking', [ImageController::class, 'ranking'])
      ->name('images.ranking');
 
 
