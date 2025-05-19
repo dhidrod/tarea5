@@ -38,6 +38,7 @@ class UserController extends Controller
     ]);
 
         $user->update($request->only('role', 'reputation', 'name', 'email', 'surname', 'nick'));
+        $user->assignRole($user->role);
 
         return redirect()->route('admin.users.index')
             ->with('success', 'Usuario actualizado correctamente.');
