@@ -46,4 +46,16 @@ class Image extends Model
     {
         return $this->hasMany(Like::class);
     }
+
+    public function likers()
+    {
+        return $this->hasManyThrough(
+            User::class,   // Modelo final al que queremos llegar
+            Like::class,   // Modelo intermedio que une users e images
+            'image_id',    // Clave foránea en la tabla likes que apunta a images.id
+            'id',          // Clave primaria en users (va a matches con likes.user_id)
+            'id',          // Clave primaria en images (local key)
+            'user_id'      // Clave foránea en likes que apunta a users.id
+        );
+    }
 }

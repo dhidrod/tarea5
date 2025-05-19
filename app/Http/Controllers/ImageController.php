@@ -95,13 +95,9 @@ class ImageController extends Controller
 
     public function ranking()
     {
-        // Cargamos las imágenes junto al sumatorio de reputación (likes ponderados)
-        // y ordenamos de mayor a menor, paginando 12 por página.
         $images = Image::with('user')
-            ->withSum(['likes as likes_reputation' => function ($q) {
-                $q->join('users', 'likes.user_id', '=', 'users.id')
-                    ->select(DB::raw('SUM(users.reputation)'));
-            }], 'users.reputation')
+            // Con withSum sumamos el campo 'reputation' de la relación likers
+            ->withSum('likers as likes_reputation', 'reputation')
             ->orderByDesc('likes_reputation')
             ->paginate(12);
 

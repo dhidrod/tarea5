@@ -49,7 +49,9 @@ Route::get('/', [HomeController::class, 'index'])
 Route::get('/images/{image}', [ImageController::class, 'show'])
      ->name('images.show')
      ->middleware('auth');
-
+// Ranking
+Route::get('/ranking', [ImageController::class, 'ranking'])
+     ->name('images.ranking');
 
 // Comentarios
 // Postear
@@ -72,9 +74,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
      Route::resource('users', UserController::class)->only(['index', 'edit', 'update', 'destroy']);
 });
 
-// Ranking
-Route::get('/ranking', [ImageController::class, 'ranking'])
-     ->name('images.ranking');
+
 
 
 Route::get('/dashboard', function () {
