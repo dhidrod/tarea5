@@ -55,11 +55,13 @@ Route::get('/ranking', [ImageController::class, 'ranking'])
 // Postear
 Route::post('/images/{image}/comments', [CommentController::class, 'store'])
      ->name('comments.store')
-     ->middleware('auth');
+     ->middleware(['auth','comment.reputation']);
 // Eliminar comentario
 Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])
      ->name('comments.destroy')
-     ->middleware('auth');
+     ->middleware(['auth','comment.reputation']);
+
+
 
 // Likes
 // Crear o eliminar like (toggle)

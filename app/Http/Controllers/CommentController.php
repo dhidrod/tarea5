@@ -31,15 +31,18 @@ class CommentController extends Controller
 
     public function destroy(Comment $comment)
     {
-        // Verificar que el usuario autenticado es el autor
-        if (Auth::id() !== $comment->user_id) {
+        // Verificar que el usuario autenticado es el autor o un admin
+        if (Auth::id() !== $comment->user_id && !Auth::user()->hasRole('admin')) {
             abort(403);
         }
-
+        
+        $imageId = $comment->image_id;
         // Borrar el comentario
         $comment->delete();
 
         // Redirigir de vuelta a la imagen con mensaje
-        return back()->with('success', 'Comentario eliminado correctamente.');
+        return redirect()
+        ->route('images.show', $imageId)
+        ->with('success', 'Comentario eliminado correctamente.');
     }
 }
