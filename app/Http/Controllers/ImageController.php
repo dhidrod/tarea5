@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StoreImageRequest;
+use App\Http\Requests\UpdateImageRequest;
+use App\Http\Requests\DeleteImageRequest;
 
 class ImageController extends Controller
 {
@@ -33,29 +35,25 @@ class ImageController extends Controller
         return view('images.edit', compact('image'));
     }
 
-    public function update(Request $request, Image $image)
+    // Actualizar usando UpdateImageRequest
+    public function update(UpdateImageRequest $request, Image $image)
     {
-        $data = $request->validate([
-            'description' => ['required', 'string', 'max:500'],
+        $image->update([
+            'description' => $request->input('description'),
         ]);
 
-        $image->update($data);
-
-        return redirect()
-            ->route('images.show', $image)
-            ->with('success', 'Descripción actualizada.');
+        return redirect()->route('images.show', $image)
+            ->with('success','Descripción actualizada.');
     }
 
-    public function destroy(Image $image)
+     // Borrar usando DeleteImageRequest
+    public function destroy(DeleteImageRequest $request, Image $image)
     {
-        // Borra fichero físico si lo tienes en storage...
         Storage::disk('public')->delete($image->image_path);
-
         $image->delete();
 
-        return redirect()
-            ->route('home')
-            ->with('success', 'Imagen eliminada.');
+        return redirect()->route('home')
+            ->with('success','Imagen eliminada.');
     }
 
     // Mostrar el formulario
@@ -64,33 +62,20 @@ class ImageController extends Controller
         return view('images.create');
     }
 
-    // Procesar la subida
-    public function store(Request $request)
+    // Procesar la subida usando StoreImageRequest
+    public function store(StoreImageRequest $request)
     {
-        // Validar
-        $data = $request->validate([
-            'image_file'  => ['required', 'image', 'max:2048'],
-            'description' => ['nullable', 'string', 'max:500'],
-        ], [
-            'image_file.required' => 'El campo de imagen es obligatorio.',
-            'image_file.image'    => 'El archivo debe ser una imagen válida.',
-            'image_file.max'      => 'La imagen no debe superar los 2MB.',
-            'description.string'  => 'La descripción debe ser texto.',
-            'description.max'     => 'La descripción no puede exceder los 500 caracteres.',
-        ]);
+        // $request ya validó y autorizó
+        $path = $request->file('image_file')->store('images','public');
 
-        // Almacenar el fichero en storage/app/public/images
-        $path = $request->file('image_file')->store('images', 'public');
-
-        // Crear registro en BD
         Image::create([
-            'user_id'    => Auth::id(),
-            'image_path' => $path,
-            'description' => $data['description'] ?? '',
+            'user_id'     => Auth::id(),
+            'image_path'  => $path,
+            'description' => $request->input('description',''),
         ]);
 
         return redirect()->route('home')
-            ->with('success', 'Imagen subida correctamente.');
+            ->with('success','Imagen subida correctamente.');
     }
 
     public function ranking()
