@@ -10,8 +10,11 @@ use App\Http\Requests\StoreImageRequest;
 use App\Http\Requests\UpdateImageRequest;
 use App\Http\Requests\DeleteImageRequest;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 class ImageController extends Controller
 {
+    use AuthorizesRequests;
     public function show(Image $image)
     {
         // Cargamos relaciones de usuario y likes (pero no comentarios completos)
@@ -32,28 +35,30 @@ class ImageController extends Controller
 
     public function edit(Image $image)
     {
+        $this->authorize('update', $image);
         return view('images.edit', compact('image'));
     }
 
     // Actualizar usando UpdateImageRequest
     public function update(UpdateImageRequest $request, Image $image)
     {
+
         $image->update([
             'description' => $request->input('description'),
         ]);
 
         return redirect()->route('images.show', $image)
-            ->with('success','Descripción actualizada.');
+            ->with('success', 'Descripción actualizada.');
     }
 
-     // Borrar usando DeleteImageRequest
+    // Borrar usando DeleteImageRequest
     public function destroy(DeleteImageRequest $request, Image $image)
     {
         Storage::disk('public')->delete($image->image_path);
         $image->delete();
 
         return redirect()->route('home')
-            ->with('success','Imagen eliminada.');
+            ->with('success', 'Imagen eliminada.');
     }
 
     // Mostrar el formulario
@@ -66,16 +71,16 @@ class ImageController extends Controller
     public function store(StoreImageRequest $request)
     {
         // $request ya validó y autorizó
-        $path = $request->file('image_file')->store('images','public');
+        $path = $request->file('image_file')->store('images', 'public');
 
         Image::create([
             'user_id'     => Auth::id(),
             'image_path'  => $path,
-            'description' => $request->input('description',''),
+            'description' => $request->input('description', ''),
         ]);
 
         return redirect()->route('home')
-            ->with('success','Imagen subida correctamente.');
+            ->with('success', 'Imagen subida correctamente.');
     }
 
     public function ranking()

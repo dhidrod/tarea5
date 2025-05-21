@@ -12,7 +12,8 @@ class DeleteImageRequest extends FormRequest
     public function authorize(): bool
     {
         $image = $this->route('image');
-        return $this->user()->can('delete', $image);
+        // Permitir solo si el usuario es el dueño:
+        return $this->user()->id === $image->user_id;
     }
 
     /**

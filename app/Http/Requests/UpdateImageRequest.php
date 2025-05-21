@@ -17,7 +17,8 @@ class UpdateImageRequest extends FormRequest
         // return $this->user()->can('update', $image);
         
         // O directamente:
-        return $this->user()->can('update', $image);
+        // Permitir solo si el usuario es el dueño:
+        return $this->user()->id === $image->user_id;
     }
 
      /**
