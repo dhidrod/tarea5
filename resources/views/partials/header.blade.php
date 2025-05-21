@@ -10,9 +10,8 @@
             @role('admin')
                 <p>Bienvenido, eres el Administrador.</p>
 
-                <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
-                    {{ __('Gestionar usuarios') }}
-                </x-nav-link>
+                <a href="{{ route('admin.users.index') }}" class="nav-link">Gestionar usuarios</a>
+
             @endrole
             @role('user')
                 <img src="{{ asset('storage/' . auth()->user()->image) }}" alt="Avatar de {{ auth()->user()->name }}"

@@ -1,10 +1,9 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-white">Usuarios</h2>
-    </x-slot>
+@extends('layouts.app2')
+
+@section('content')
 
     <div class="py-6">
-        <div class="max-w-7xl mx-auto">
+        <div class="max-w-7xl mx-auto text-white bg-[#161615] rounded-lg shadow p-6">
             @if (session('success'))
                 <div class="mb-4 text-green-600">{{ session('success') }}</div>
             @endif
@@ -53,4 +52,4 @@
 
         </div>
     </div>
-</x-app-layout>
+@endsection
