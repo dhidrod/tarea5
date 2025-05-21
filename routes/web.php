@@ -21,22 +21,23 @@ Route::get('/', [HomeController::class, 'index'])
 
 // Images
      // Policies
+     // Procesar subida
+     Route::post('/images', [ImageController::class, 'store'])
+          ->name('images.store')
+          ->middleware('auth');
      // Mostrar formulario de subida
      Route::get('/images/create', [ImageController::class, 'create'])
           ->name('images.create')
           ->middleware('auth');
 
-     // Procesar subida
-     Route::post('/images', [ImageController::class, 'store'])
-          ->name('images.store')
+
+     // Mostrar formulario de edición
+     Route::get('/images/{image}/edit', [ImageController::class, 'edit'])
+          ->name('images.edit')
           ->middleware('auth');
      // Actualizar descripción
      Route::put('/images/{image}', [ImageController::class, 'update'])
           ->name('images.update')
-          ->middleware('auth');
-     // Mostrar formulario de edición
-     Route::get('/images/{image}/edit', [ImageController::class, 'edit'])
-          ->name('images.edit')
           ->middleware('auth');
      // Eliminar imagen
      Route::delete('/images/{image}', [ImageController::class, 'destroy'])

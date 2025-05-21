@@ -3,9 +3,13 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Spatie\Permission\Traits\HasRoles;
+
 
 class DeleteImageRequest extends FormRequest
 {
+    
+    use HasRoles;
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -13,7 +17,7 @@ class DeleteImageRequest extends FormRequest
     {
         $image = $this->route('image');
         // Permitir solo si el usuario es el dueño:
-        return $this->user()->id === $image->user_id;
+        return $this->user()->id === $image->user_id || $this->user()->hasRole('admin');
     }
 
     /**

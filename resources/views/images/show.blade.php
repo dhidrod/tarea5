@@ -3,23 +3,39 @@
 
 @section('content')
     <div class="container mx-auto p-6 ">
+        @if (session('error'))
+            <div class="mb-4 text-red-600">
+                {{-- Mensaje de error --}}
+                {{ session('error') }}
+            </div>
+        @endif
         {{-- Link para volver atrás --}}
         <a href="{{ route('home') }}" class="text-blue-500 hover:underline mb-4 inline-block">&larr; Volver atrás</a>
-        @can('update', $image)
-            <a href="{{ route('images.edit', $image) }}" class="px-3 py-1 bg-yellow-500 text-black rounded hover:bg-yellow-400">
+        {{-- Botones de edición y eliminación --}}
+        @php
+            $user = auth()->user();
+            $isOwner = $user && $user->id === $image->user_id;
+            $isAdmin = $user && $user->hasRole('admin');
+        @endphp
+
+        @if ($isOwner || $isAdmin)
+            {{-- Botón Editar --}}
+            <a href="{{ route('images.edit', $image) }}"
+                class="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-400">
                 Editar
             </a>
-        @endcan
 
-        @can('delete', $image)
+            {{-- Botón Eliminar --}}
             <form method="POST" action="{{ route('images.destroy', $image) }}" class="inline-block"
-                onsubmit="return confirm('Eliminar imagen?');">
-                @csrf @method('DELETE')
+                onsubmit="return confirm('¿Eliminar imagen?');">
+                @csrf
+                @method('DELETE')
                 <button type="submit" class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-500">
                     Eliminar
                 </button>
             </form>
-        @endcan
+        @endif
+
 
         <div class="relative mb-6 flex items-center justify-center">
             {{-- Flecha anterior (izquierda) --}}
@@ -112,7 +128,7 @@
                     <div class="flex justify-between items-center">
                         <p class="text-gray-800">{{ $comment->content }}</p>
                         {{-- Botón de eliminar --}}
-                        @if (auth()->id() === $comment->user_id)
+                        @if (auth()->id() === $comment->user_id || auth()->user()->hasRole('admin'))
                             <form action="{{ route('comments.destroy', $comment) }}" method="POST"
                                 onsubmit="return confirm('¿Eliminar tu comentario?');">
                                 @csrf

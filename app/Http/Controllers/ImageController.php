@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreImageRequest;
 use App\Http\Requests\UpdateImageRequest;
 use App\Http\Requests\DeleteImageRequest;
-
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ImageController extends Controller
@@ -35,7 +34,13 @@ class ImageController extends Controller
 
     public function edit(Image $image)
     {
-        $this->authorize('update', $image);
+        $user = Auth::user();
+        // Si el usuario no es el dueño o un admin, redirigir
+        if ($image->user_id !== $user->id && ! $user->hasRole('admin')) {
+            return redirect()
+                ->route('images.show', $image)
+                ->with('error', 'Acción prohibida.');
+        }
         return view('images.edit', compact('image'));
     }
 
