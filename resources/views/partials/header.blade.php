@@ -41,7 +41,7 @@
                 <a href="/" class="nav-link">Inicio</a>
             </li>
             <li>
-                <a href="/dashboard" class="nav-link">Dashboard</a>
+                <a href="{{route('profile.edit')}}" class="nav-link">Editar Perfil</a>
             </li>
 
 
