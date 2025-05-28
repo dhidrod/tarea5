@@ -13,11 +13,6 @@ class UpdateImageRequest extends FormRequest
     {
         $image = $this->route('image'); // recupera el Image inyectado en la ruta
 
-        // Usamos la Policy que ya definimos:
-        // return $this->user()->can('update', $image);
-        
-        // O directamente:
-        // Permitir solo si el usuario es el dueño:
         return $this->user()->id === $image->user_id || $this->user()->hasRole('admin');
     }
 

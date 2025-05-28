@@ -10,12 +10,8 @@ class StoreImageRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-     public function authorize(): bool
+    public function authorize(): bool
     {
-        // Authorization: usa tu ImagePolicy@create
-        //return $this->user()->can('create', Image::class);
-
-        // $this->user() es el usuario autenticado, o null si no hay sesión.
         return $this->user() !== null;
     }
 
