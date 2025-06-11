@@ -23,7 +23,7 @@ class CommentController extends Controller
             'content'  => $data['content'],
         ]);
 
-        // Redirigimos de vuelta al detalle, con mensaje opcional
+        // Redirigimos de vuelta
         return redirect()
             ->route('images.show', $image)
             ->with('success', 'Comentario añadido correctamente.');

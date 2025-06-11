@@ -20,7 +20,6 @@ Route::get('/', [HomeController::class, 'index'])
 
 
 // Images
-     // Policies
      // Procesar subida
      Route::post('/images', [ImageController::class, 'store'])
           ->name('images.store')
@@ -43,6 +42,7 @@ Route::get('/', [HomeController::class, 'index'])
      Route::delete('/images/{image}', [ImageController::class, 'destroy'])
           ->name('images.destroy')
           ->middleware('auth');
+          
 // Mostrar imagen
 Route::get('/images/{image}', [ImageController::class, 'show'])
      ->name('images.show')
@@ -61,8 +61,6 @@ Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])
      ->name('comments.destroy')
      ->middleware(['auth','comment.reputation']);
 
-
-
 // Likes
 // Crear o eliminar like (toggle)
 Route::post('/images/{image}/like', [LikeController::class, 'toggle'])
@@ -73,8 +71,6 @@ Route::post('/images/{image}/like', [LikeController::class, 'toggle'])
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
      Route::resource('users', UserController::class)->only(['index', 'edit', 'update', 'destroy']);
 });
-
-
 
 
 Route::get('/dashboard', function () {
